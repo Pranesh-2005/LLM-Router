@@ -1,0 +1,27 @@
+{
+  "_comment": "Hand-maintained capability scores (0-1). Wins over anything scripts/update_catalog.py derives; the updater never overwrites these. quality=general reasoning, coding=code tasks, speed=normalised output tokens/sec. input_cost_per_1m / output_cost_per_1m / context are optional and only needed for models the LiteLLM price sheet does not cover (NVIDIA NIM chat models, self-hosted endpoints).",
+
+  "gemini/gemini-3.5-flash": { "quality": 0.86, "coding": 0.84, "speed": 0.92, "tags": ["fast", "long-context"] },
+
+  "groq/llama-3.1-8b-instant": { "quality": 0.48, "coding": 0.44, "speed": 1.0, "tags": ["cheap", "fastest"] },
+  "groq/llama-3.3-70b-versatile": { "quality": 0.68, "coding": 0.64, "speed": 0.99, "tags": ["fast", "cheap", "open-weight"] },
+  "groq/openai/gpt-oss-120b": { "quality": 0.80, "coding": 0.82, "speed": 0.95, "tags": ["fast", "cheap", "open-weight"] },
+
+  "nvidia_nim/openai/gpt-oss-120b": {
+    "quality": 0.80, "coding": 0.82, "speed": 0.68,
+    "input_cost_per_1m": 0.15, "output_cost_per_1m": 0.60, "context": 131072,
+    "supports_tools": true, "tags": ["open-weight", "estimated-price"]
+  },
+  "nvidia_nim/nvidia/llama-3.3-nemotron-super-49b-v1.5": {
+    "quality": 0.74, "coding": 0.70, "speed": 0.58,
+    "input_cost_per_1m": 0.30, "output_cost_per_1m": 0.60, "context": 131072,
+    "supports_tools": true, "tags": ["reasoning", "estimated-price"]
+  },
+  "nvidia_nim/mistralai/mistral-nemotron": {
+    "quality": 0.71, "coding": 0.66, "speed": 0.62,
+    "input_cost_per_1m": 0.60, "output_cost_per_1m": 1.20, "context": 131072,
+    "supports_tools": true, "tags": ["estimated-price"]
+  },
+
+  "_price_note": "NVIDIA build.nvidia.com runs on free dev credits, so there is no public per-token rate. The numbers above are comparable-model estimates, tagged estimated-price. They exist so cost-aware routing has a real signal instead of treating NVIDIA as free and always picking it."
+}

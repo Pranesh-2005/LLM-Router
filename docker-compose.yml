@@ -1,0 +1,20 @@
+services:
+  router:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data   # catalog is read at startup; restart to pick up a refresh
+    restart: unless-stopped
+
+  # Weekly price/model refresh. Writes into the shared data volume.
+  catalog-updater:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    entrypoint: ["sh", "-c", "while true; do python scripts/update_catalog.py; sleep 604800; done"]
+    restart: unless-stopped
